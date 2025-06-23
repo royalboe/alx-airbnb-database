@@ -17,18 +17,16 @@ This document outlines the requirements and database specification used to creat
 ### 2. Property
 - `property_id` (Primary Key, UUID)
 - `host_id` (Foreign Key → User.user_id)
-- `title` (VARCHAR, NOT NULL)
+- `name` (VARCHAR, NOT NULL)
 - `description` (TEXT, NOT NULL)
 - `location` (VARCHAR, NOT NULL)
 - `price_per_night` (DECIMAL, NOT NULL)
-- `max_guests` (INTEGER, NOT NULL)
-- `address` (VARCHAR, NOT NULL)
 - `created_at`, `updated_at` (TIMESTAMP)
 
 ### 3. Booking
 - `booking_id` (Primary Key, UUID)
 - `property_id` (Foreign Key → Property.property_id)
-- `guest_id` (Foreign Key → User.user_id)
+- `user_id` (Foreign Key → User.user_id)
 - `start_date` (DATE, NOT NULL)
 - `end_date` (DATE, NOT NULL)
 - `total_price` (DECIMAL, NOT NULL)
@@ -42,11 +40,11 @@ This document outlines the requirements and database specification used to creat
 - `payment_date` (TIMESTAMP, default current time)
 - `payment_method` (ENUM: credit_card, paypal, stripe)
 - `payment_status` (ENUM: pending, completed, failed)
-- `transaction_id` (VARCHAR, UNIQUE)
 
 ### 5. Review
 - `review_id` (Primary Key, UUID)
-- `booking_id` (Foreign Key → Booking.booking_id)
+- `property_id` (Foreign Key → Property.property_id)
+- `user_id` (Foreign Key → User.user_id)
 - `rating` (INTEGER, CHECK rating between 1 and 5)
 - `comment` (TEXT, optional)
 - `created_at` (TIMESTAMP)
@@ -73,40 +71,48 @@ This document outlines the requirements and database specification used to creat
 |           | role                | ENUM (guest, host, admin) | Role of the user                       |
 |           | created_at          | TIMESTAMP             | Timestamp of account creation             |
 
+| Entity    | Attribute           | Type                  | Description                               |
+|-----------|---------------------|-----------------------|-------------------------------------------|
 | **Property** | property_id       | UUID (PK)             | Unique property ID                        |
 |           | host_id             | UUID (FK to User)     | User who owns the property                |
-|           | title               | VARCHAR, NOT NULL     | Property title                            |
+|           | name              | VARCHAR, NOT NULL     | Property title                            |
 |           | description         | TEXT, NOT NULL        | Property description                      |
 |           | location            | VARCHAR, NOT NULL     | City or area where the property is        |
-|           | address             | VARCHAR, NOT NULL     | Full property address                     |
 |           | price_per_night     | DECIMAL, NOT NULL     | Price per night                           |
-|           | max_guests          | INTEGER, NOT NULL     | Maximum allowed guests                    |
 |           | created_at          | TIMESTAMP             | Created date                              |
 |           | updated_at          | TIMESTAMP             | Last updated date                         |
 
+| Entity    | Attribute           | Type                  | Description                               |
+|-----------|---------------------|-----------------------|-------------------------------------------|
 | **Booking** | booking_id        | UUID (PK)             | Unique booking ID                         |
 |           | property_id         | UUID (FK)             | Booked property                           |
-|           | guest_id            | UUID (FK to User)     | User who made the booking                 |
+|           | user_id            | UUID (FK to User)     | User who made the booking                 |
 |           | start_date          | DATE, NOT NULL        | Check-in date                             |
 |           | end_date            | DATE, NOT NULL        | Check-out date                            |
 |           | total_price         | DECIMAL, NOT NULL     | Total cost                                |
 |           | status              | ENUM (pending, confirmed, canceled) | Booking status     |
 |           | created_at          | TIMESTAMP             | Timestamp of booking creation             |
 
+| Entity    | Attribute           | Type                  | Description                               |
+|-----------|---------------------|-----------------------|-------------------------------------------|
 | **Payment** | payment_id        | UUID (PK)             | Unique payment ID                         |
 |           | booking_id          | UUID (FK)             | Related booking                           |
 |           | amount              | DECIMAL, NOT NULL     | Amount paid                               |
 |           | payment_status      | ENUM (pending, completed, failed) | Status of payment     |
-|           | transaction_id      | VARCHAR, UNIQUE       | Transaction reference ID                  |
 |           | payment_method      | ENUM (credit_card, paypal, stripe) | Method used    |
 |           | payment_date        | TIMESTAMP             | When payment occurred                     |
 
+| Entity    | Attribute           | Type                  | Description                               |
+|-----------|---------------------|-----------------------|-------------------------------------------|
 | **Review**  | review_id         | UUID (PK)             | Unique review ID                          |
-|           | booking_id          | UUID (FK)             | Associated booking                        |
+|           | property_id          | UUID (FK)             | Associated property                        |
+|           | user_id          | UUID (FK)             | Associated user                       |
 |           | rating              | INTEGER (1-5)         | Rating score                              |
 |           | comment             | TEXT                  | Optional comment                          |
 |           | created_at          | TIMESTAMP             | Review timestamp                          |
 
+| Entity    | Attribute           | Type                  | Description                               |
+|-----------|---------------------|-----------------------|-------------------------------------------|
 | **Message** | message_id        | UUID (PK)             | Unique message ID                         |
 |           | sender_id           | UUID (FK to User)     | Sender of the message                     |
 |           | recipient_id        | UUID (FK to User)     | Recipient of the message                  |
@@ -121,20 +127,20 @@ This document outlines the requirements and database specification used to creat
 - A **User** can book many **Properties** via **Bookings** (1:N)
 - A **Property** can have many **Bookings** (1:N)
 - A **Booking** has one **Payment** (1:1)
-- A **Booking** has one **Review** (1:1)
+- A **Property** has many **Reviews** (1:N)
 - A **User** can send/receive many **Messages** (1:N in both directions)
 
 ---
 
 ## 🧩 ER Diagram
 
-![Airbnb ER Diagram](./ERD/airbnb_erd.jpg)
+![Airbnb ER Diagram](./airbnb_erd.jpg)
 
 ---
 
 ## 📁 ERD Location
 
-- File: `[AirBnB](https://drive.google.com/file/d/1CzCg7jbalz-MGzYQCjVV7aMRGzsFwtf7/view?usp=sharing)` *(or .png/.svg depending on your output)*
+- File: [AirBnB](https://drive.google.com/file/d/1CzCg7jbalz-MGzYQCjVV7aMRGzsFwtf7/view?usp=sharing)
 - Tool Used: Draw.io / Diagrams.net
 
 ---
