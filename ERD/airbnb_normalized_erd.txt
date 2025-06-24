@@ -42,8 +42,8 @@ properties [icon: home, color: green] {
   description text not null
   price_per_night decimal not null
   max_guests  integer null
-  no_bath integer null
-  no_bathroom integer null
+  num_bathroom integer null
+  num_bedroom integer null
   address_1 text not null
   created_at timestamp default current_timestamp
   updated_at timestamp default current_timestamp
