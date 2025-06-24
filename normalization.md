@@ -6,7 +6,7 @@ In this document, I tried to explain the steps taken to modify and normalize my 
 
 ## ✅ First Normal Form (1NF)
 
-> Ensure all attributes are atomic (indivisible) and there are no repeating groups.
+> I ensured all attributes are atomic (indivisible) and there are no repeating groups.
 
 - All columns store atomic values (e.g., `first_name`, `email`, `city`).
 - Multi-valued fields (e.g., a user speaking multiple languages or a property having many categories) were removed and replaced with **junction tables**:
@@ -21,7 +21,7 @@ In this document, I tried to explain the steps taken to modify and normalize my 
 
 ## ✅ Second Normal Form (2NF)
 
-> Eliminate partial dependencies; all non-key attributes must depend on the whole primary key.
+> I eliminated partial dependencies; all non-key attributes must depend on the whole primary key.
 
 - Composite relationships (e.g., a property having multiple attributes) were moved into junction tables with their own surrogate primary keys (e.g., UUIDs).
 - Each non-key attribute in all tables fully depends on the primary key.
@@ -36,7 +36,7 @@ In this document, I tried to explain the steps taken to modify and normalize my 
 
 ## ✅ Third Normal Form (3NF)
 
-> Remove transitive dependencies; non-key attributes should not depend on other non-key attributes.
+> I removed transitive dependencies; non-key attributes should not depend on other non-key attributes.
 
 - Transitive dependencies were resolved by introducing reference tables:
   - `location → country → region` is now structured using foreign keys instead of repeating strings.
@@ -73,8 +73,8 @@ In this document, I tried to explain the steps taken to modify and normalize my 
 
 ## ERD Reference
 
-The complete normalized schema is represented in the ERD located in the `/ERD/` directory or [view here](./ERD/airbnb_normalized_erd.svg) and it was built using [eraser](app.eraser.io).
-The document, in text based schema notation is located [here](./ERD/airbnb_normalized_erd.md).
+The complete normalized schema is represented in the ERD located in the `/ERD/` directory or [view here](./ERD/airbnb_normalized_erd.png) and it was built using [eraser](app.eraser.io).
+The code, in text based schema notation is located [here](./ERD/airbnb_normalized_erd.txt).
 
 ---
 
