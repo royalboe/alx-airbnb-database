@@ -121,7 +121,7 @@ favorites [icon: heart, color: red] {
 }
 
 booking [icon: book-open, color: pink] {
-  booking_id uuid pk
+  booking_id uuid pk indexed
   property_id uuid fk not null
   guest_id uuid fk not null
   start_date date not null
@@ -145,6 +145,7 @@ guest_type [icon: users, color: pink] {
 }
 
 message [icon: message-circle, color: purple] {
+  message_id uuid pk indexed
   sender_id uuid fk not null
   recipient_id uuid fk not null
   message_body text not null
