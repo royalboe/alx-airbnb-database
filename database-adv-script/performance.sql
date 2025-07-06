@@ -11,7 +11,7 @@ SELECT
   pay.payment_id,
   pay.amount,
   pay.status
-FROM bookings AS b
+FROM booking AS b
 INNER JOIN users AS u ON b.user_id = u.id
 INNER JOIN properties AS p ON b.property_id = p.property_id
 INNER JOIN payments AS pay ON b.booking_id = pay.booking_id;
@@ -31,7 +31,7 @@ SELECT
   pay.payment_id,
   pay.amount,
   pay.status
-FROM bookings AS b
+FROM booking AS b
 INNER JOIN users AS u ON b.user_id = u.id
 INNER JOIN properties AS p ON b.property_id = p.property_id
 LEFT JOIN payments AS pay ON b.booking_id = pay.booking_id;
