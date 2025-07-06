@@ -223,8 +223,8 @@ CREATE TABLE payment (
 );
 
 -- Index Suggestions
-CREATE INDEX idx_properties_location_id ON properties(location_id);
-CREATE INDEX idx_properties_price ON properties(price_per_night);
-CREATE INDEX idx_booking_property_id ON booking(property_id);
-CREATE INDEX idx_favorites_user_id ON favorites(user_id);
-CREATE INDEX idx_images_property_id ON images(property_id);
+-- CREATE INDEX idx_properties_location_id ON properties(location_id);
+-- CREATE INDEX idx_properties_price ON properties(price_per_night);
+-- CREATE INDEX idx_booking_property_id ON booking(property_id);
+-- CREATE INDEX idx_favorites_user_id ON favorites(user_id);
+-- CREATE INDEX idx_images_property_id ON images(property_id);
